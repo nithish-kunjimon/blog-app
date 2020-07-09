@@ -47,7 +47,7 @@ app.get("/blogs", (req, res) => {
 //NEW ROUTE
 app.get('/blogs/new', (req, res) => {
     res.render('new');
-})
+});
 
 //CREATE ROUTE
 app.post('/blogs', (req, res) => {
@@ -57,8 +57,21 @@ app.post('/blogs', (req, res) => {
         } else {
             res.redirect('/blogs');
         }
-    })
-})
+    });
+});
+
+//SHOW ROUTE
+app.get('/blogs/:id', (req, res) => {
+    Blog.findById(req.params.id, (err, foundBlog) => {
+        if (err) {
+            res.redirect('index');
+        } else {
+            res.render('show', {
+                blog: foundBlog
+            });
+        }
+    });
+});
 
 app.listen(3000, () => {
     console.log("Server Has Started!");
